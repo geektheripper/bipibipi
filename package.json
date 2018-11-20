@@ -1,13 +1,14 @@
 {
-  "name": "bilibili-api",
-  "version": "1.0.0",
+  "name": "bipibipi",
+  "version": "0.0.1",
   "description": "bilibili api",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
   "repository": "https://github.com/geektheripper/bilibili-api",
   "license": "MIT",
-  "keywords": [],
+  "keywords": ["bilibili", "api", "request"],
+  "files": ["build", "yarn.lock", "LICENSE", "README.md"],
   "scripts": {
     "info": "npm-scripts-info",
     "build": "run-s clean && run-p build:*",
@@ -18,12 +19,12 @@
     "fix:tslint": "tslint --fix --project .",
     "test": "run-s build test:*",
     "test:lint": "tslint --project . && prettier \"src/**/*.ts\" --list-different",
-    "test:unit": "nyc --silent ava",
+    "test:unit": "nyc --silent ava --timeout=20s",
     "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
     "cov": "run-s build test:unit cov:html && opn coverage/index.html",
     "cov:html": "nyc report --reporter=html",
     "cov:send": "nyc report --reporter=lcov > coverage.lcov && codecov",
-    "cov:check": "nyc report && nyc check-coverage --lines 100 --functions 100 --branches 100",
+    "cov:check": "nyc report && nyc check-coverage --lines 0 --functions 0 --branches 0",
     "doc": "run-s doc:html && opn build/docs/index.html",
     "doc:html": "typedoc src/ --target ES6 --mode file --out build/docs",
     "doc:json": "typedoc src/ --target ES6 --mode file --json build/docs/typedoc.json",
@@ -31,8 +32,8 @@
     "version": "standard-version",
     "reset": "git clean -dfx && git reset --hard && npm i",
     "clean": "trash build test",
-    "all": "run-s reset test cov:check doc:html",
-    "prepare-release": "run-s all version doc:publish",
+    "all": "run-s reset test cov:check",
+    "prepare-release": "run-s all version",
     "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('bilibili-api must be installed with Yarn: https://yarnpkg.com/')\""
   },
   "scripts-info": {
@@ -52,19 +53,37 @@
     "node": ">=8.9"
   },
   "dependencies": {
-    "sha.js": "^2.4.11"
+    "@types/form-data": "^2.2.1",
+    "@types/query-string": "^6.1.1",
+    "@types/request": "^2.48.1",
+    "@types/request-promise-native": "^1.0.15",
+    "@types/url-parse": "^1.4.1",
+    "form-data": "^2.3.3",
+    "query-string": "^6.2.0",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.5",
+    "sha.js": "^2.4.11",
+    "url-parse": "^1.4.4"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.118",
+    "@types/opn": "^5.1.0",
     "ava": "1.0.0-beta.7",
     "codecov": "^3.1.0",
     "cz-conventional-changelog": "^2.1.0",
+    "dotenv": "^6.1.0",
     "gh-pages": "^2.0.0",
+    "jimp": "^0.5.6",
+    "lodash": "^4.17.11",
     "npm-run-all": "^4.1.3",
     "nyc": "^13.0.1",
+    "opn": "^5.4.0",
     "opn-cli": "^3.1.0",
     "prettier": "^1.14.3",
+    "qrcode": "^1.3.2",
     "standard-version": "^4.4.0",
     "trash-cli": "^1.4.0",
+    "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.15.0",
     "tslint-immutable": "^4.7.0",
@@ -86,7 +105,10 @@
     }
   },
   "prettier": {
-    "singleQuote": true
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "all"
   },
   "nyc": {
     "exclude": [

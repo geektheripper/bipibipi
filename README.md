@@ -1,3 +1,3 @@
-# bilibili-api
+# bipibipi
 
-bilibili api
+bilibili api project (beta version)
