@@ -4,11 +4,7 @@ require('dotenv').config()
 import Auth from '../lib/auth'
 import { get } from 'lodash'
 
-export const auth = new Auth({
-  userId: Number(process.env.USER_ID),
-  sessionData: process.env.SESSION_DATA,
-  csrfToken: process.env.CSRF_TOKEN,
-})
+export const auth = new Auth(Auth.parseEnviroment())
 
 export const request = auth.getRequest()
 
