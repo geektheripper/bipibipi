@@ -1,4 +1,5 @@
 import request from 'request-promise-native'
+import fs from 'mz/fs'
 
 import { LoginInfo, LoginStatusCode } from '../api/passport/types'
 import getLoginUrl from '../api/passport/get-login-url'
@@ -14,8 +15,16 @@ import { AuthRequest, TypeRequestOptions } from '../utils/api'
  * @class Auth
  */
 export default class Auth {
-  public static parseCurl(value: string): LoginInfo {
-    const cookie = decodeURIComponent(value.match(/-H '(Cookie:.+?)'/)[1])
+  /**
+   * 解析一个 Curl 请求，并从中提取出 ID/Session/Token
+   *
+   * @static
+   * @param {string} rawCurl
+   * @returns {LoginInfo} 登录信息，用于构造 Auth 对象
+   * @memberof Auth
+   */
+  public static parseCurl(rawCurl: string): LoginInfo {
+    const cookie = decodeURIComponent(rawCurl.match(/-H '(Cookie:.+?)'/)[1])
     const csrfToken = cookie.match(/bili_jct=(.+?);/)[1]
     const userId = cookie.match(/DedeUserID=(.+?);/)[1]
     const sessionData = cookie.match(/SESSDATA=(.+?);/)[1]
@@ -23,6 +32,20 @@ export default class Auth {
       userId: Number(userId),
       sessionData,
       csrfToken,
+    }
+  }
+  /**
+   * 从环境变量中提取 USER_ID / SESSION_DATA / CSRF_TOKEN
+   *
+   * @static
+   * @returns {LoginInfo} 登录信息，用于构造 Auth 对象
+   * @memberof Auth
+   */
+  public static parseEnviroment(): LoginInfo {
+    return {
+      userId: Number(process.env.USER_ID),
+      sessionData: process.env.SESSION_DATA,
+      csrfToken: process.env.CSRF_TOKEN,
     }
   }
 
@@ -50,6 +73,39 @@ export default class Auth {
     }
     const { userId, sessionData, csrfToken } = this.loginInfo
     return `DedeUserID=${userId}; SESSDATA=${sessionData}; bili_jct=${csrfToken}`
+  }
+  /**
+   * 获取用于登录的 Enviroment，需要先完成登录
+   *
+   * @returns {string} 包含登录信息的 key=value 格式的文本
+   * @memberof Auth
+   */
+  public getEnv(): string {
+    const { userId, sessionData, csrfToken } = this.loginInfo
+    return `USER_ID=${userId}
+SESSION_DATA=${sessionData}
+CSRF_TOKEN=${csrfToken}
+`
+  }
+  /**
+   * 异步写 Env 文件
+   *
+   * @param {*} filePath 目标文件的路径
+   * @returns {Promise<void>} Promise
+   * @memberof Auth
+   */
+  public writeEnvFile(filePath: string): Promise<void> {
+    return fs.writeFile(filePath, this.getEnv())
+  }
+  /**
+   * 同步写 Env 文件
+   *
+   * @param {string} filePath 目标文件的路径
+   * @returns void
+   * @memberof Auth
+   */
+  public writeEnvFileSync(filePath: string) {
+    return fs.writeFileSync(filePath, this.getEnv())
   }
   /**
    * 获取 Url 用于客户端扫码

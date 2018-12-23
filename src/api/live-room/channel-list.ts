@@ -1,15 +1,15 @@
 import { prefix, errorMsg } from '../../utils'
 import { apiFactory } from '../../utils/api'
 
-enum PkStatus {
+export enum PkStatus {
   Closed,
   Open,
 }
-enum HotStatus {
+export enum HotStatus {
   Cold,
   Hot,
 }
-enum LockStatus {
+export enum LockStatus {
   Open,
   Locked,
 }

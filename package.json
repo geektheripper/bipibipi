@@ -7,8 +7,17 @@
   "module": "build/module/index.js",
   "repository": "https://github.com/geektheripper/bilibili-api",
   "license": "MIT",
-  "keywords": ["bilibili", "api", "request"],
-  "files": ["build", "yarn.lock", "LICENSE", "README.md"],
+  "keywords": [
+    "bilibili",
+    "api",
+    "request"
+  ],
+  "files": [
+    "build",
+    "yarn.lock",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
     "info": "npm-scripts-info",
     "build": "run-s clean && run-p build:*",
@@ -54,11 +63,13 @@
   },
   "dependencies": {
     "@types/form-data": "^2.2.1",
+    "@types/mz": "^0.0.32",
     "@types/query-string": "^6.1.1",
     "@types/request": "^2.48.1",
     "@types/request-promise-native": "^1.0.15",
     "@types/url-parse": "^1.4.1",
     "form-data": "^2.3.3",
+    "mz": "^2.7.0",
     "query-string": "^6.2.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5",

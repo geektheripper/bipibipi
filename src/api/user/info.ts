@@ -11,7 +11,7 @@ import {
   IdentificationStatus,
 } from './types'
 
-interface UserInfo {
+export interface UserInfo {
   /**
    * 用户 Id `mid`
    *
