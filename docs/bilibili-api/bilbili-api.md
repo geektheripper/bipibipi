@@ -9,8 +9,11 @@
 **目录:**
 
 + [X0 通用代码]()
-
 + [X1 获取排行榜]()
++ [X2 全站搜索]()
++ [X3 获取视频信息]()
++ [X4 获取作品评价]()
++ [X5 获取用户信息]()
 
 
 
@@ -364,18 +367,223 @@ type（隶属分区）
 
 
 
-## X3 获取视频信息
+## X3 获取普通视频信息
+
+### 1.0 热度相关
+
+#### Request
+
+```json
+{
+    URL: "https://api.bilibili.com/x/web-interface/archive/stat",
+	Method: "GET",
+}
+```
+
+
+
+| 参数 | 是否必须 | 值参考   | 描述     |
+| ---- | -------- | -------- | -------- |
+| aid  | true     | （avid） | 视频av号 |
+
+
+#### Response
+
+```json
+{
+    "code": 0,
+    "message": "0",
+    "ttl": 1,
+    "data": {
+        "aid": 41949084,
+        "view": 647784,
+        "danmaku": 4731,
+        "reply": 6294,
+        "favorite": 59299,
+        "coin": 83974,
+        "share": 8946,
+        "like": 73454,
+        "now_rank": 0,
+        "his_rank": 0,
+        "no_reprint": 1,
+        "copyright": 1
+    }
+}
+```
+
+### 2.0标签相关
+
+#### Request
+
+```json
+{
+    URL: "https://api.bilibili.com/x/tag/archive/tags",
+	Method: "GET",
+}
+```
+
+
+
+| 参数     | 是否必须 | 值参考                              | 描述     |
+| -------- | -------- | ----------------------------------- | -------- |
+| callback | false    | jqueryCallback_bili_575982102165244 | -        |
+| aid      | true     | （av id）                           | 视频av号 |
+| jsonp    | false    | jsonp                               | -        |
+| _        | false    | 1549631553074                       | -        |
+
+#### Response
+
+```json
+{
+    "code": 0,
+    "message": "0",
+    "ttl": 1,
+    "data": [
+        {
+            "tag_id": 386,
+            "tag_name": "翻唱",
+            "cover": "http://i0.hdslb.com/bfs/archive/xxx.jpg",
+            "head_cover": "http://i0.hdslb.com/bfs/archive/xxx.jpg",
+            "content": "“翻唱”是指将已经发表并由他人演唱的歌曲根据自己的风格重新演唱的演绎形式。",
+            "short_content": "同一首好歌，不一样的精彩。",
+            "type": 3,
+            "state": 0,
+            "ctime": 1436866637,
+            "count": {
+                "view": 0,
+                "use": 533419,
+                "atten": 134742
+            },
+            "is_atten": 0,
+            "likes": 0,
+            "hates": 0,
+            "attribute": 0,
+            "liked": 0,
+            "hated": 0
+        }
+    ]
+}
+```
+
+
+
+### 3.0评论相关
+
+#### Request
+
+```json
+{
+    URL: "https://api.bilibili.com/x/v2/reply",
+	Method: "GET",
+    Headers:{
+    	Referer: "https://www.bilibili.com/ranking?spm_id_from=$spm_id_from"
+	}
+}
+```
+
+
+
+| 参数     | 是否必须 | 值参考                              | 描述               |
+| -------- | -------- | ----------------------------------- | ------------------ |
+| callback | false    | jqueryCallback_bili_575982102165244 | -                  |
+| oid      | true     | （av id）                           | 视频av号           |
+| pn       | false    | 1                                   | 第几页的评论       |
+| type     | true     | 1                                   | 类型               |
+| sort     | false    | 0                                   | 是否返回已经排序的 |
+| jsonp    | false    | jsonp                               | -                  |
+| _        | false    | 1549631553074                       | -                  |
+
+#### Response
+
+```json
+{
+    "rpid": 1370193116,
+    "oid": 41949084,
+    "type": 1,
+    "mid": 210115007,
+    "root": 0,
+    "parent": 0,
+    "dialog": 0,
+    "count": 0,
+    "rcount": 0,
+    "floor": 4447,
+    "state": 0,
+    "fansgrade": 0,
+    "attr": 0,
+    "ctime": 1549633841,
+    "rpid_str": "1370193116",
+    "root_str": "0",
+    "parent_str": "0",
+    "dialog_str": "",
+    "like": 2,
+    "action": 0,
+    "member": {
+        "mid": "210115007",
+        "uname": "浅暮丶流年",
+        "sex": "男",
+        "sign": "",
+        "avatar": "http://i1.hdslb.com/bfs/face/xxx.jpg",
+        "rank": "10000",
+        "DisplayRank": "0",
+        "level_info": {
+            "current_level": 4,
+            "current_min": 0,
+            "current_exp": 0,
+            "next_exp": 0
+        },
+        "pendant": {
+            "pid": 266,
+            "name": "2019拜年祭·纪念",
+            "image": "http://i2.hdslb.com/bfs/face/xxx.png",
+            "expire": 1551269584
+        },
+        "nameplate": {
+            "nid": 0,
+            "name": "",
+            "image": "",
+            "image_small": "",
+            "level": "",
+            "condition": ""
+        },
+        "official_verify": {
+            "type": -1,
+            "desc": ""
+        },
+        "vip": {
+            "vipType": 0,
+            "vipDueDate": 0,
+            "dueRemark": "",
+            "accessStatus": 0,
+            "vipStatus": 0,
+            "vipStatusWarn": ""
+        },
+        "fans_detail": null,
+        "following": 0
+    },
+    "content": {
+        "message": "原来空专辑不是我一个(｀・ω・´)",
+        "plat": 2,
+        "device": "",
+        "members": []
+    },
+    "replies": null,
+    "assist": 0,
+    "folder": {
+        "has_folded": false,
+        "is_folded": false,
+        "rule": "https://www.bilibili.com/blackboard/foldingreply.html"
+    }
+}
+```
+
+
+
+## X4 获取官方视频信息
 
 ...
 
 
 
-## X4 获取作品评论
-
-...
-
-
-
-## X5 获取用户信息
+## X5 获取用户资料
 
 ...
