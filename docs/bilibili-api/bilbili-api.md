@@ -586,4 +586,204 @@ type（隶属分区）
 
 ## X5 获取用户资料
 
-...
+### 获取用户详细信息
+
+#### Request
+
+```json
+{
+    URL: "https://api.bilibili.com/x/space/acc/info",
+	Method: "GET",
+}
+```
+
+| 参数  | 是否必须 | 值参考 | 描述   |
+| ----- | -------- | ------ | ------ |
+| mid   | true     |        | 用户id |
+| jsonp | false    | jsonp  |        |
+
+#### Response
+
+```json
+{
+    "code": 0,
+    "message": "0",
+    "ttl": 1,
+    "data": {
+        "mid": 8047632,
+        "name": "哔哩哔哩弹幕网",
+        "sex": "男",
+        "face": "http://i0.hdslb.com/bfs/face/xxx.jpg",
+        "sign": "哔哩哔哩 干杯 - ( ゜- ゜)つロ",
+        "rank": 10000,
+        "level": 6,
+        "jointime": 1423215591,
+        "moral": 0,
+        "silence": 0,
+        "birthday": "01-01",
+        "coins": 453963,
+        "fans_badge": false,
+        "official": {
+            "role": 3,
+            "title": "哔哩哔哩弹幕网官方账号 ",
+            "desc": ""
+        },
+        "vip": {
+            "type": 2,
+            "status": 1
+        },
+        "is_followed": false,
+        "top_photo": "http://i2.hdslb.com/bfs/space/xxx.png",
+        "theme": {}
+    }
+}
+```
+
+
+
+
+
+### 获取用户直播间信息
+
+#### Request
+
+```json
+{
+    URL: "https://api.live.bilibili.com/room/v1/Room/getRoomInfoOld",
+	Method: "GET",
+}
+```
+
+| 参数 | 是否必须 | 值参考    | 描述     |
+| ---- | -------- | --------- | -------- |
+| mid  | true     |           | 用户id   |
+
+#### Response
+
+```json
+{
+    "code": 0,
+    "msg": "ok",
+    "message": "ok",
+    "data": {
+        "roomStatus": 1,
+        "roundStatus": 0,
+        "liveStatus": 0,
+        "url": "https://live.bilibili.com/21852",
+        "title": "自言自语",
+        "cover": "https://i0.hdslb.com/bfs/live/xxx.jpg",
+        "online": 295618,
+        "roomid": 21852,
+        "broadcast_type": 0
+    }
+}
+```
+
+
+
+### 获取用户空间公告
+
+#### Requests
+
+```json
+{
+    URL: "https://api.bilibili.com/x/space/notice",
+	Method: "GET",
+}
+```
+
+| 参数  | 是否必须 | 值参考 | 描述   |
+| ----- | -------- | ------ | ------ |
+| mid   | true     | -      | 用户id |
+| jsonp | false    | jsonp  | -      |
+
+
+
+#### Response
+
+```json
+{
+    "code": 0,
+    "message": "0",
+    "ttl": 1,
+    "data": "嘿嘿\n微博：weibo.com/laofanqie\n公众号：一颗老番茄"
+}
+```
+
+
+
+### 获取用户关注量
+
+#### Requests
+
+```json
+{
+    URL: "https://api.bilibili.com/x/relation/stat",
+	Method: "GET",
+}
+```
+
+| 参数     | 是否必须 | 值参考 | 描述   |
+| -------- | -------- | ------ | ------ |
+| vmid     | true     | -      | 用户id |
+| jsonp    | false    | jsonp  | -      |
+| callback | false    | __jp3  | -      |
+
+
+
+#### Response
+
+```json
+{
+    "code": 0,
+    "message": "0",
+    "ttl": 1,
+    "data": {
+        "mid": 546195,
+        "following": 1, // 关注
+        "whisper": 0,
+        "black": 0,
+        "follower": 3320587 // 被关注（粉丝数）
+    }
+}
+```
+
+
+
+### 获取用户总播放量
+
+#### Requests
+
+```json
+{
+    URL: "https://api.bilibili.com/x/space/upstat",
+	Method: "GET",
+}
+```
+
+| 参数     | 是否必须 | 值参考 | 描述   |
+| -------- | -------- | ------ | ------ |
+| mid      | true     | -      | 用户id |
+| jsonp    | false    | jsonp  | -      |
+| callback | false    | __jp3  | -      |
+
+
+
+#### Response
+
+```json
+{
+    "code": 0,
+    "message": "0",
+    "ttl": 1,
+    "data": {
+        "archive": {
+            "view": 262726717 //总播放量
+        },
+        "article": {
+            "view": 0
+        }
+    }
+}
+```
+
