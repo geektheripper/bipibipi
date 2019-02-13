@@ -1,11 +1,11 @@
 {
   "name": "bipibipi",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "bilibili api",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
-  "repository": "https://github.com/geektheripper/bilibili-api",
+  "repository": "https://github.com/geektheripper/bipibipi",
   "license": "MIT",
   "keywords": [
     "bilibili",
